@@ -1,0 +1,85 @@
+@font-face {
+			font-family: 'mit';
+			src:  url('BMitra.ttf') format('truetype');
+		}
+*{
+  font-family: mit !important;
+  font-size: 25px !important;
+}
+
+.found{
+    background-color:#FF9;
+    color:#555;
+}
+
+/*
+li:hover
+{
+  background-color: #7baafd;
+  color: #fff;
+}
+*/
+#header{
+  color:#050046;
+  position:fixed;
+  z-index:7;
+  background-color: rgba(255, 255, 255, 0.4);
+  width: 28px;
+  height: 100vh;
+  top: 0px;
+  right:0px;
+}
+#footer{
+/*  color:#CCC;*/
+  height: 48px;
+  position:fixed;
+  z-index:5;
+  bottom:0px;
+  width:100%;
+/*
+  padding-left:2px;
+  padding-right:2px;
+*/
+/*  border-top:1px solid #444;*/
+}
+
+.listcontain{
+  position: absolute;
+  bottom: 48px;
+/*  padding: 0 40px 0 0;*/
+  overflow: scroll;
+/*  max-height: calc(100vh - 10px);*/
+/*  width: 100%;*/
+}
+
+.title{
+  position:absolute;
+  text-align: center;
+  right: 0;
+  bottom: 100%;
+/*  height: 600px;*/
+/*  width: 100%;*/
+  z-index: 7;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(-90deg);
+}
+
+.longText{
+  line-height: 120% !important;
+  padding-top:4px !important;
+}
+/*http://codepen.io/onsen/pen/mgGwa/*/
+
+.longText::-webkit-scrollbar,
+::-webkit-scrollbar {
+  display: block;
+  background-color: white;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #666;
+  border: 1px solid white;
+}

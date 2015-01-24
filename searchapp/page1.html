@@ -1,0 +1,19 @@
+<ons-page id="page1">
+<!--
+  <div id="header">
+
+  </div>
+  <div class="title">ارزش نسبی خدمات پزشکی</div>
+-->
+  <div id="container" class="listcontain"  onscroll="whenScrlBottom(this);">
+    <ul class="list list--inset" id="list1" style="padding-top:40px;">
+    </ul>
+  </div>
+  <div id="footer">
+    <input placeholder="جست و جو" onkeyup ="$('#container').animate({ scrollTop: 0 }, 'slow');search();"
+           onmouseup="search();" onmouseover="this.focus();" onfocus="search();"
+           class="searchbar" id="inp"/>
+    <ul id="sug" class="sug">
+    </ul>
+  </div>
+</ons-page>

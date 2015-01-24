@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="components/loader.js"></script>
+  <script src="js/jquery-2.1.3.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/list.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/spinner.css">
+
+<!--  Search -->
+<script src="trie.js"></script>
+<script src="trie_tree.js"></script>
+<script src="js/js_suffix_trie.min.js"></script>
+<script src="js/underscore-min.js"></script>
+  <script src="codes.js"></script>
+<script src="js/search.js"></script>
+<!--         end search             -->
+  <script>
+        ons.bootstrap();
+        ons.disableAutoStatusBarFill();  // (Monaca enables StatusBar plugin by default)
+    </script>
+
+  <script src="content.js"></script>
+  <script src="ortho.js"></script>
+  <script>
+  function setPath(level,index)///level , index
+    {
+      window.localStorage.setItem(level, index);
+      console.log(level+" "+index);
+    }
+
+    function fillDetails(index)
+    {
+      setPath("valueIndex",index);
+      document.getElementById("opName").innerHTML =data[index].label;
+      document.getElementById("opCode").innerHTML =data[index].value;
+      if(data[index].Comment.length>3)
+      {
+        document.getElementById("commentdiv").style.display="block";
+        document.getElementById("comment").innerHTML =data[index].Comment;
+        convertCodeToLink(document.getElementById("comment"));
+      }
+      else
+      {
+        document.getElementById("commentdiv").style.display="none";
+      }
+
+      document.getElementById("opProp").innerHTML =data[index].propVal;
+      document.getElementById("opUnest").innerHTML =data[index].unestVal;
+    }
+    function crDiag(index) {
+      dialog.show();
+      fillDetails(index);
+    }
+    function showList()
+    {
+      targetList.innerHTML=createResultList().innerHTML;
+  }
+  </script>
+  <script>
+    document.addEventListener("pageinit", function(e) {
+  if (e.target.id == "page1") {
+    ul=document.getElementById("sug");
+    s = document.getElementById("inp");
+    $("#container").height($(window).innerHeight()-48);
+    $("#container").width($(window).innerWidth());
+    targetList=document.getElementById("list1");
+    targetList.innerHTML=createResultList().innerHTML;
+    spinner.hide();
+  }
+}, false);
+    function startup()
+    {
+      var spinDlg=ons.createDialog('spin.html');
+      var dialog=ons.createDialog('list.html');
+    }
+
+
+    ////////////////////////////
+    ////http://stackoverflow.com/questions/4326845/how-can-i-determine-the-direction-of-a-jquery-scroll-event
+    var lastScrollTop = 0;
+var whenScrlBottom=function(sender){
+        ul.style.display='none';
+   var st = $(sender).scrollTop();
+  console.log(st);
+   if (st > lastScrollTop)
+   {
+       // downscroll code
+     try{
+          targetList.appendChild(CreateDataItem(indexesToShow[topShowedItemIndex+maxResult]));
+         topShowedItemIndex++;
+         $("#"+sender.id).attr("overflow", "auto");
+        }catch(e)
+        {
+//          console.log(e);
+        }
+   }
+   lastScrollTop = st;
+};
+
+</script>
+
+
+</head>
+<body onload="startup();">
+
+<!--  http://codepen.io/onsen/pen/zxxaGa/ -->
+<style>
+  ons-dialog p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+input {
+  width: 100%;
+}
+  </style>
+
+  <ons-template id="spin.html">
+    <ons-dialog var="spinner" style="background-color:transparent;" cancelable>
+  <div class="spinner" id="spinner">
+  <div class="double-bounce1"></div>
+  <div class="double-bounce2"></div>
+</div>
+    </ons-dialog>
+  </ons-template>
+<ons-template id="list.html">
+
+   <ons-dialog var="dialog" style="width:90%;max-height: 95vh;" cancelable>
+
+     <div  style="background-color:rgb(6, 152, 0);max-height: 25vh;overflow-y: auto !important;">
+     <ons-list-item modifier="tappable" id="opName" class="longText" style="color:#fff;">
+        Foo
+      </ons-list-item>
+     </div>
+      <ons-list-item modifier="tappable" id="opCode">
+        Bar
+      </ons-list-item>
+      <div id="commentdiv"  style="max-height: 25vh;overflow-y: auto !important;">
+<!--      <ons-list-item>بازنمود</ons-list-item>-->
+      <ons-list-item modifier="tappable" id="comment" class="longText">
+        Bar
+      </ons-list-item>
+        </div>
+      <label style="float:left;margin-left:6px;" for="opProp">ارزش نسبی</label>
+      <ons-list-item modifier="tappable"  id="opProp">
+        Hoge
+      </ons-list-item>
+      <label style="float:left;margin-left:6px;" for="opUnest">ارزش پایه بیهوشی</label>
+      <ons-list-item modifier="tappable"  id="opUnest">
+
+      </ons-list-item>
+        <ons-button modifier="large" ng-click="dialog.hide()" ng-device-backbutton="dialog.hide()">done</ons-button>
+
+  </ons-dialog>
+</ons-template>
+
+    <ons-navigator id="navigator1" var="myNavigator" page="page1.html">
+
+  </ons-navigator>
+</body>
+</html>
