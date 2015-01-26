@@ -1,0 +1,133 @@
+<!doctype html>
+<html ng-app="Demo" ng-controller="DemoController">
+<head>
+    <meta charset="utf-8" />
+
+    <title>
+        Grouping Nested ngRepeat Lists In AngularJS
+    </title>
+</head>
+<body>
+
+    <h1>
+        Grouping Nested ngRepeat Lists In AngularJS
+    </h1>
+
+    <p>
+        Group by:
+        <a ng-click="groupBy( 'code' )">Gender</a> -
+        <a ng-click="groupBy( 'date' )">Hair</a>
+    </p>
+
+    <!-- BEGIN: Outer ngRepeat. -->
+    <div ng-repeat="group in groups">
+
+        <h2>
+            {{ group.label }}
+        </h2>
+
+        <ul>
+            <!-- BEGIN: Inner ngRepeat. -->
+            <li ng-repeat="friend in group.friends">
+
+              <p ng-if="(friend.code!=group.label)">{{ friend.code }}</p>
+              <p ng-if="(friend.date!=group.label)">{{ friend.date }}</p>
+
+            </li>
+            <!-- END: Inner ngRepeat. -->
+        </ul>
+
+    </div>
+    <!-- END: Outer ngRepeat. -->
+
+
+
+    <!-- Load jQuery and AngularJS from the CDN. -->
+    <script
+        type="text/javascript"
+        src="vendor/angular.js">
+    </script>
+  <script src="searchapp/bower_components/localstoragedb/localstoragedb.js"></script>
+
+    <!-- Load the app module and its classes. -->
+    <script type="text/javascript">
+      function loadDb()
+{
+  var lib = new localStorageDB("library", localStorage);
+  if( lib.isNew() ) {
+    lib.createTable("items", ["code", "date"]);
+  }
+  try{return lib.query("items", null);}
+  catch(e){console.error(e)}
+}
+        var demo = angular.module( "Demo", [] );
+        demo.controller(
+            "DemoController",
+            function( $scope, $timeout ) {
+                function sortOn( collection, name ) {
+                    collection.sort(
+                        function( a, b ) {
+                            if ( a[ name ] <= b[ name ] ) {
+                                return( -1 );
+                            }
+                            return( 1 );
+                        }
+                    );
+                }
+                $scope.groupBy = function( attribute ) {
+                    $scope.groups = [];
+                    sortOn( $scope.friends, attribute );
+                    var groupValue = "_INVALID_GROUP_VALUE_";
+                    for ( var i = 0 ; i < $scope.friends.length ; i++ ) {
+                        var friend = $scope.friends[ i ];
+                        if ( friend[ attribute ] !== groupValue ) {
+                            var group = {
+                                label: friend[ attribute ],
+                                friends: []
+                            };
+                            groupValue = group.label;
+                            $scope.groups.push( group );
+                        }
+                        group.friends.push( friend );
+                    }
+                };
+                $scope.friends = loadDb();
+//                  [
+//                    {
+//                        name: "Michael",
+//                        gender: "Male",
+//                        hair: "Brunette"
+//                    },
+//                    {
+//                        name: "George Michael",
+//                        gender: "Male",
+//                        hair: "Brunette"
+//                    },
+//                    {
+//                        name: "Gob",
+//                        gender: "Male",
+//                        hair: "Brunette"
+//                    },
+//                    {
+//                        name: "Tobias",
+//                        gender: "Male",
+//                        hair: "Black"
+//                    },
+//                    {
+//                        name: "Lindsay",
+//                        gender: "Female",
+//                        hair: "Blonde"
+//                    },
+//                    {
+//                        name: "Maeby",
+//                        gender: "Female",
+//                        hair: "Black"
+//                    }
+//                ];
+                $scope.groups = [];
+            }
+        );
+    </script>
+
+</body>
+</html>

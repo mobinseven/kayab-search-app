@@ -1,0 +1,7 @@
+@font-face {
+			font-family: 'mit';
+			src:  url('BMitra.ttf') format('truetype');
+		}
+.pers{
+  font-family: mit !important;
+}

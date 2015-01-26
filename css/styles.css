@@ -135,3 +135,7 @@ a:hover {
   border-radius: 0;
   box-shadow: 0 0 0 1px rgba(0,0,0,.04),0 1px 5px rgba(0,0,0,.1);
 }
+@font-face {
+			font-family: 'mit';
+			src:  url('/searchapp/css/BMitra.ttf') format('truetype');
+		}

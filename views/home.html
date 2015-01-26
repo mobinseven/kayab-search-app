@@ -1,20 +1,33 @@
 <div class="container">
-
-  <div ng-if="isAuthenticated() && currentUser">
+  <div>
+    <div class="jumbotron">
+      <h2><i class="ion-images pers">کایاب</i> </h2>
+      <p ng-if="!isAuthenticated()">
+        <a class="btn btn-lg btn-success" href="#/login"><i class="ion-log-in"></i> Log in</a>
+        <a class="btn btn-lg btn-primary" href="#/signup"><i class="ion-person-add"></i> Create account</a>
+      </p>
+      <div ng-if="isAuthenticated() && currentUser">
     <div class="row">
       <span>loggen in!</span>
     </div>
   </div>
-
-  <div ng-if="!isAuthenticated()">
-    <div class="jumbotron">
-      <h2><i class="ion-images"></i> Kayab</h2>
-      <p>This is a basic Kayab clone powered by <strong>Satellizer</strong>. To continue, please log in with your Kayab account or create a new email account.</p>
-      <p>
-        <a class="btn btn-lg btn-success" href="#/login"><i class="ion-log-in"></i> Log in</a>
-        <a class="btn btn-lg btn-primary" href="#/signup"><i class="ion-person-add"></i> Create account</a>
-      </p>
+      <div class="table-responsive">
+        <table  class="table table-condensed table-bordered table-hover" ng-show="itemdb">
+          <thead>
+            <tr class="pers">
+               <th>#</th>
+               <th>نام</th>
+               <th>تاریخ</th>
+            </tr>
+         </thead>
+          <tbody ng-repeat="i in itemdb" ng-init="loadData(i)">
+            <tr>
+              <td>{{i.ID}}</td>
+              <td class="pers" style="direction:rtl;font-size:large;">{{i.code}}</td>
+              <td>{{i.date}}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
   </div>
-
 </div>

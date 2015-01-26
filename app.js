@@ -1,4 +1,4 @@
-angular.module('Kayab', ['ngRoute', 'ngMessages', 'satellizer'])
+angular.module('Kayab', ['ngRoute', 'ngMessages', 'satellizer','ui.bootstrap'])
   .config(function($routeProvider, $authProvider) {
     $routeProvider
       .when('/', {
